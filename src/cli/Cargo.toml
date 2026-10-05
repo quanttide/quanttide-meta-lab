@@ -1,0 +1,8 @@
+[package]
+name = "quanttide-meta-lab-cli"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+pr4xis = "0.29.1"
