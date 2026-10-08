@@ -26,6 +26,6 @@
 
 动手顺序按风险，不按层次。整套东西最不确定的一环是召得回——规则记下来了，下次动手前到底能不能被送到面前、能不能改变行为。所以先做最薄的一条：手工往 JSON 里写一条规则，让 check 命中它，证明这一环成立；再补记录侧，把五条命令写全；最后把规范与规格成文，做一次验收。
 
-各项目一篇：`storage.md`、`recall.md`、`cli.md`、`skill.md`、`spec.md`、`eval.md`。
+各项目一篇。通用部分随本目录：`storage.md`、`recall.md`、`skill.md`、`spec.md`、`eval.md`；CLI 那一篇跟着代码走，在 `src/cli/docs/dev-guide/reflect/cli.md`。
 
-设计草稿在 `docs/dev-guide/`：`reflect.md` 是设计正本，`reflect_spec.md` 是规格格式，`reflect_test.md` 是开发场景的验证用例。当前任务在 `TODO.md`。
+设计草稿在上一层 `docs/dev-guide/`：`reflect.md` 是设计正本，`reflect_spec.md` 是规格格式，`reflect_test.md` 是开发场景的验证用例。当前任务在 `src/cli/TODO.md`。
