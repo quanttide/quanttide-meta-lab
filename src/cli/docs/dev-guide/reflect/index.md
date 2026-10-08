@@ -26,6 +26,6 @@
 
 动手顺序按风险，不按层次。整套东西最不确定的一环是召得回——规则记下来了，下次动手前到底能不能被送到面前、能不能改变行为。所以先做最薄的一条：手工往 JSON 里写一条规则，让 check 命中它，证明这一环成立；再补记录侧，把五条命令写全；最后把规范与规格成文，做一次验收。
 
-各项目一篇。`cli.md`（命令壳）与 `storage.md`（存储机制）讲的是工具本身，放在上一级 `docs/dev-guide/`；本目录是 reflect 这个模块的建模：`index.md`、`recall.md`、`skill.md`、`spec.md`、`eval.md`。
+各项目一篇。`cli.md`（命令壳）、`storage.md`（存储机制）、`skill.md`（反思规范）讲的是工具本身，放在上一级 `docs/dev-guide/`；本目录是 reflect 这个模块的建模：`index.md`、`recall.md`、`spec.md`、`eval.md`。
 
 设计草稿在 `docs/dev-guide/`：`reflect.md` 是设计正本，`reflect_spec.md` 是规格格式，`reflect_test.md` 是开发场景的验证用例。当前任务在 `TODO.md`。
