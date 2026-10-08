@@ -20,4 +20,4 @@
 
 ## 验收
 
-拿 `docs/dev-guide/reflect_test.md` 里的 Day 30 事件试：第二次让 AI 写功能时，check 能不能命中 Day 1 固化的那两条规则。命中算成立；命中不了，要么规则写得太飘，要么词面匹配太粗。
+拿 `docs/reflect/reflect_test.md` 里的 Day 30 事件试：第二次让 AI 写功能时，check 能不能命中 Day 1 固化的那两条规则。命中算成立；命中不了，要么规则写得太飘，要么词面匹配太粗。
