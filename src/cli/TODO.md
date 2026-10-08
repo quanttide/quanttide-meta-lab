@@ -10,23 +10,13 @@
 - 测试模块规格：covers、scenarios、must_not
 - 规格里要写清「我本来想要什么」，否则事后判不出哪一步偏了
 
-## 2. 写 reflect CLI 原型
-
-按 `docs/dev-guide/reflect.md` 的最小闭环：
-
-- 五个命令：`reflect add` / `dep` / `test` / `commit` / `check`
-- 三种节点 Claim / Premise / Rule，两条边 depends_on / revises
-- 存储先用单个 JSON 文件，不上图数据库
-- 先只做拆解（动作 1），跑通再加检验、固化
-
-## 3. 在真实环境里跑
+## 2. 在真实环境里跑
 
 - 把规格交给 AI 实现
-- `reflect add` / `dep` 记下结论（AI 实现符合意图）及它依赖的前提
-- `reflect test` 找反例：实现里哪部分是我没要的
-- `reflect commit` 固化成规则
+- 偏离固化：`reflect commit <规则> --revises <前提>`
+- 下次动手前 `reflect check <事件>`
 
-## 4. 记下偏差
+## 3. 记下偏差
 
 按 `docs/dev-guide/reflect_test.md` 的三类断点归类：
 
@@ -35,3 +25,7 @@
 - 边界断点：没说不要什么，AI 就全都要
 
 产出是下次动手前的约束。
+
+## 4. 没进程序的部分
+
+结论、前提、反例、可疑标记这四样，现在只落在纸上与规格里，程序不维护它们：程序只收规则、发规则。真跑一轮下来如果发现没有它们就写不出规则，再考虑收回来。

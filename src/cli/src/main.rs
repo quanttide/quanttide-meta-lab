@@ -1,4 +1,4 @@
-//! reflect 命令行：五条命令，一一对应三个动作加一次检索。
+//! reflect 命令行：两条命令，一条记规则，一条在动手前把它找回来。
 
 use std::path::PathBuf;
 use std::process::ExitCode;
@@ -11,7 +11,7 @@ use reflect::store::Store;
 #[command(
     name = "reflect",
     version,
-    about = "通用反思程序：把结论拆成前提，检验前提，把修正后的前提固化成规则。"
+    about = "通用反思程序：把修正后的前提固化成规则，动手前找回来。"
 )]
 struct Cli {
     /// 存档文件，一个 JSON 文件。
@@ -29,31 +29,11 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Command {
-    /// 记下结论。
-    Add {
-        /// 结论。
-        claim: String,
-    },
-    /// 记下依赖关系：结论依赖前提。
-    Dep {
-        /// 结论。
-        claim: String,
-        /// 前提。
-        premise: String,
-    },
-    /// 检验前提：录入反例并标为可疑。
-    Test {
-        /// 前提。
-        premise: String,
-        /// 反例。不给就只把前提标为可疑。
-        #[arg(long, value_name = "反例")]
-        counterexample: Option<String>,
-    },
     /// 固化为规则。
     Commit {
-        /// 规则。
+        /// 规则，写成可执行的句子，带上事件里会出现的词。
         rule: String,
-        /// 这条规则修正的前提。不给就修正当前全部可疑前提。
+        /// 这条规则修正的前提。
         #[arg(long = "revises", value_name = "前提")]
         revises: Vec<String>,
     },
@@ -80,32 +60,13 @@ fn run(cli: &Cli) -> Result<(), Box<dyn std::error::Error>> {
     let mut store = Store::load(path)?;
 
     match &cli.command {
-        Command::Add { claim } => {
-            store.add_claim(claim);
-            store.save(path)?;
-            println!("已记下结论：{claim}");
-        }
-        Command::Dep { claim, premise } => {
-            store.add_dependency(claim, premise);
-            store.save(path)?;
-            println!("已记下依赖：{claim} ——依赖——► {premise}");
-        }
-        Command::Test {
-            premise,
-            counterexample,
-        } => {
-            store.add_counterexample(premise, counterexample.as_deref());
-            store.save(path)?;
-            println!("已标为可疑前提：{premise}");
-            if let Some(counterexample) = counterexample {
-                println!("反例：{counterexample}");
-            }
-        }
         Command::Commit { rule, revises } => {
-            let targets = store.commit_rule(rule, revises);
+            store.commit_rule(rule, revises);
             store.save(path)?;
             println!("已固化规则：{rule}");
-            report_revised(&targets);
+            for premise in revises {
+                println!("修正的前提：{premise}");
+            }
         }
         // 检索只读，不落盘。
         Command::Check { event } => match event {
@@ -115,16 +76,6 @@ fn run(cli: &Cli) -> Result<(), Box<dyn std::error::Error>> {
     }
 
     Ok(())
-}
-
-fn report_revised(targets: &[String]) {
-    if targets.is_empty() {
-        println!("修正的前提：无（当前没有可疑前提）");
-        return;
-    }
-    for target in targets {
-        println!("修正的前提：{target}");
-    }
 }
 
 fn report_hits(store: &Store, event: &str) {

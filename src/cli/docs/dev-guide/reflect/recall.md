@@ -6,7 +6,7 @@
 
 输入是一次事件，比如「要不要进入体系、被收编、谈合作」；输出是跟它相关的规则，按命中比例从高到低。`reflect check` 这个命令就是召回的外壳。
 
-一条规则的可比较文本，是它自己的句子加上它所修正的前提的句子。修正关系是 `commit` 时留下的 `revises` 边，所以召回要顺着边走一步。
+一条规则的可比较文本，是它自己的句子加上它所修正的前提。修正关系在 `commit` 时写进规则的 `revises`，所以召回连它一起算。
 
 ## 怎么算命中
 
@@ -20,7 +20,7 @@
 
 ## 为什么单独成项
 
-它是整套东西里最可能被换掉的一块。词面匹配不够用，会换嵌入检索；再不够，换图查询。换的时候存储和命令都不该动，所以接口要固定：存储给「取全部规则」和「规则修正了哪些前提」，召回吃「一次事件」吐「一组命中」，命令行只认这两个。
+它是整套东西里最可能被换掉的一块。词面匹配不够用，会换嵌入检索；再不够，换图查询。换的时候存储和命令都不该动，所以接口要固定：存储给「取全部规则」，召回吃「一次事件」吐「一组命中」，命令行只认这两个。
 
 ## 边界
 
@@ -30,6 +30,6 @@
 
 切词的单元测试在 `src/recall.rs` 的 `tests` 里。
 
-端到端在 `tests/cli.rs`：`day_one_to_day_thirty_ends_with_a_hit` 从 Day 1 的偏离固化出规则、Day 30 用 `check` 命中它；`check_reports_no_hit_for_an_unrelated_event` 证明无关事件不该被召回。
+端到端在 `tests/cli.rs`：`day_one_to_day_thirty_ends_with_a_hit` 从 Day 1 的偏离固化出规则、Day 30 用 `check` 命中它；`check_reports_no_hit_for_an_unrelated_event` 证明无关事件不该被召回；`check_finds_a_rule_through_the_premise_it_revises` 证明前提真的参与了补词。
 
 `examples/ai_model_drift.rs` 把同一段再走一遍，命中结果直接打出来，不用跑测试就能看。

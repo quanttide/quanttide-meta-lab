@@ -6,11 +6,11 @@
 use std::cmp::Ordering;
 use std::collections::HashSet;
 
-use crate::store::{Node, Store};
+use crate::store::{Rule, Store};
 
 /// 一条命中的规则。
 pub struct Hit<'a> {
-    pub rule: &'a Node,
+    pub rule: &'a Rule,
     /// 命中词占事件词的比例。
     pub score: f64,
     /// 命中了哪些词。
@@ -26,8 +26,8 @@ pub fn recall<'a>(store: &'a Store, event: &str) -> Vec<Hit<'a>> {
 
     let mut hits: Vec<Hit<'a>> = store
         .rules()
-        .into_iter()
-        .filter_map(|rule| match_one(store, rule, &query))
+        .iter()
+        .filter_map(|rule| match_one(rule, &query))
         .collect();
 
     hits.sort_by(|left, right| {
@@ -43,9 +43,9 @@ pub fn recall<'a>(store: &'a Store, event: &str) -> Vec<Hit<'a>> {
 /// 一条规则命中不了事件就返回 `None`。
 ///
 /// 找的是一句话里的词，不是语义：规则文本加上它所修正的前提，去碰事件的词。
-fn match_one<'a>(store: &Store, rule: &'a Node, query: &HashSet<String>) -> Option<Hit<'a>> {
+fn match_one<'a>(rule: &'a Rule, query: &HashSet<String>) -> Option<Hit<'a>> {
     let mut haystack: HashSet<String> = tokens(&rule.text).into_iter().collect();
-    for premise in store.revised_premises(&rule.text) {
+    for premise in &rule.revises {
         haystack.extend(tokens(premise));
     }
 
