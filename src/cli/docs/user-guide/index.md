@@ -61,6 +61,6 @@ reflect --store ~/我的反思.json check "要不要跟人合作"
 
 `walkthrough.md` 用一个完整的例子把五条命令依次敲一遍，每一步回什么、为什么这么写都写清楚。
 
-`commands.md` 是五条命令的逐条说明和常见问题。
+`../api-references/commands.md` 是五条命令的逐条说明和常见问题。
 
 想改这个工具本身，去看上一级的 `dev-guide/`。

@@ -116,4 +116,4 @@ reflect check
 规则：需求里的抽象词必须先钉死边界
 ```
 
-五条命令的逐条说明在 `commands.md`。
+五条命令的逐条说明在 `../api-references/commands.md`。
