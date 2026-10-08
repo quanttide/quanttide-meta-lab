@@ -16,4 +16,4 @@
 
 ## 验收
 
-`docs/reflect/reflect_test.md` 的完整示例，从 Day 1 的那次偏离到 Day 30 被拦住，能用这五条命令走一遍。
+`reflect_test.md` 的完整示例，从 Day 1 的那次偏离到 Day 30 被拦住，能用这五条命令走一遍。
